@@ -24,7 +24,7 @@ export async function getStaticProps() {
 
 const Home: NextPage = () => {
   const postQuery = trpc.useQuery(["post.all"]);
-
+  console.log(postQuery);
   return (
     <>
       <Head>
