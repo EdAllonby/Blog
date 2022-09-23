@@ -7,6 +7,10 @@ import { z } from "zod";
  */
 export const serverSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
+  CONTENTFUL_SCHEMA_URL: z.string(),
+  CONTENTFUL_ACCESS_TOKEN: z.string(),
+  CONTENTFUL_PREVIEW_ACCESS_TOKEN: z.string(),
+  CONTENTFUL_PREVIEW_SECRET: z.string(),
 });
 
 /**
