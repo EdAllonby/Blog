@@ -1,9 +1,29 @@
-import type { NextPage } from "next";
+import { createSSGHelpers } from "@trpc/react/ssg";
+import { NextPage } from "next";
 import Head from "next/head";
 import { trpc } from "../utils/trpc";
+import { appRouter } from "../server/router";
+import superjson from "superjson";
+
+export async function getStaticProps() {
+  const ssg = createSSGHelpers({
+    router: appRouter,
+    ctx: {},
+    transformer: superjson,
+  });
+
+  await ssg.fetchQuery("post.all");
+
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+    },
+    revalidate: 1,
+  };
+}
 
 const Home: NextPage = () => {
-  const hello = trpc.useQuery(["example.hello", { text: "from tRPC" }]);
+  const postQuery = trpc.useQuery(["post.all"]);
 
   return (
     <>
@@ -18,6 +38,11 @@ const Home: NextPage = () => {
           <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
             Ed Allonby
           </h1>
+          <div>
+            {postQuery.data?.map((blogPost) => (
+              <div key={blogPost?.slug}>{blogPost?.slug}</div>
+            ))}
+          </div>
         </div>
       </main>
     </>

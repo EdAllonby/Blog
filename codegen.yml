@@ -1,0 +1,18 @@
+overwrite: true
+
+schema:
+  - ${CONTENTFUL_SCHEMA_URL}:
+      headers:
+        "Authorization": Bearer ${CONTENTFUL_ACCESS_TOKEN}
+
+documents:
+  - "**/*.ts"
+generates:
+  generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+
+hooks:
+  afterOneFileWrite:
+    - eslint --fix

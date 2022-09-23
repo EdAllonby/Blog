@@ -7,13 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "codegen": "cross-env DOTENV_CONFIG_PATH=.env.local graphql-codegen --config codegen.yml -r dotenv/config"
   },
   "dependencies": {
     "@trpc/client": "^9.27.2",
     "@trpc/next": "^9.27.2",
     "@trpc/react": "^9.27.2",
     "@trpc/server": "^9.27.2",
+    "graphql": "^16.6.0",
+    "graphql-request": "^5.0.0",
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -22,12 +25,17 @@
     "zod": "^3.18.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.12.1",
+    "@graphql-codegen/introspection": "^2.2.1",
+    "@graphql-codegen/typescript": "^2.7.3",
+    "@graphql-codegen/typescript-operations": "^2.5.3",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "autoprefixer": "^10.4.12",
+    "cross-env": "^7.0.3",
     "eslint": "8.22.0",
     "eslint-config-next": "12.3.1",
     "eslint-config-prettier": "^8.5.0",
