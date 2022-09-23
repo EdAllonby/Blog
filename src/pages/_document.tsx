@@ -12,7 +12,7 @@ export default function Document() {
           crossOrigin="anonymous"
         />
       </Head>
-      <body className="font-ebgaramond">
+      <body className="bg-light-yellow font-ebgaramond">
         <Main />
         <NextScript />
       </body>

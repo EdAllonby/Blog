@@ -1,9 +1,6 @@
 overwrite: true
 
-schema:
-  - ${CONTENTFUL_SCHEMA_URL}:
-      headers:
-        "Authorization": Bearer ${CONTENTFUL_ACCESS_TOKEN}
+schema: ${CMS_SCHEMA_URL}
 
 documents:
   - "**/*.ts"
@@ -12,7 +9,9 @@ generates:
     plugins:
       - "typescript"
       - "typescript-operations"
-
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"
 hooks:
   afterOneFileWrite:
     - eslint --fix

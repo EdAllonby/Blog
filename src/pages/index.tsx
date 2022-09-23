@@ -4,6 +4,7 @@ import Head from "next/head";
 import { trpc } from "../utils/trpc";
 import { appRouter } from "../server/router";
 import superjson from "superjson";
+import Link from "next/link";
 
 export async function getStaticProps() {
   const ssg = createSSGHelpers({
@@ -23,8 +24,7 @@ export async function getStaticProps() {
 }
 
 const Home: NextPage = () => {
-  const postQuery = trpc.useQuery(["post.all"]);
-  console.log(postQuery);
+  const postQuery = trpc.useQuery(["post.all"], { staleTime: 3600 });
   return (
     <>
       <Head>
@@ -33,16 +33,16 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="bg-light-yellow">
-        <div className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
-          <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
-            Ed Allonby
-          </h1>
-          <div>
-            {postQuery.data?.map((blogPost) => (
-              <div key={blogPost?.slug}>{blogPost?.slug}</div>
-            ))}
-          </div>
+      <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
+        <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
+          Ed Allonby
+        </h1>
+        <div>
+          {postQuery.data?.map((blogPost) => (
+            <Link key={blogPost.slug} href={`posts/${blogPost.slug}`}>
+              <a className="hover:underline">{blogPost.title}</a>
+            </Link>
+          ))}
         </div>
       </main>
     </>
