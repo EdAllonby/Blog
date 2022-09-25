@@ -7,7 +7,7 @@ import { appRouter } from "../server/trpc/router";
 import superjson from "superjson";
 import { createContext } from "../server/trpc/context";
 import { Title } from "@/components/title";
-import Link from "next/link";
+import { AboutLink } from "@/components/about-link";
 
 export const getStaticProps: GetStaticProps = async () => {
   const ssg = createProxySSGHelpers({
@@ -35,9 +35,9 @@ const Home: NextPage = () => {
         <title>Ed Allonby</title>
       </Head>
       <main className="container mx-auto flex flex-col p-4">
-        <Link href="/about">
-          <a className="self-end hover:underline">About</a>
-        </Link>
+        <div className="self-end">
+          <AboutLink />
+        </div>
         <div className="flex max-w-lg flex-col self-center">
           <Title />
           <div className="self-start">

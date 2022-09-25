@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AboutLink } from "./about-link";
 
 export const Header = () => {
   return (
@@ -8,9 +9,7 @@ export const Header = () => {
           Ed Allonby
         </a>
       </Link>
-      <Link href="/about">
-        <a className="text-gray-700 hover:underline">About</a>
-      </Link>
+      <AboutLink />
     </header>
   );
 };
