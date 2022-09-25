@@ -38,9 +38,11 @@ const Home: NextPage = () => {
         <Link href="/about">
           <a className="self-end hover:underline">About</a>
         </Link>
-        <div className="flex flex-col items-center">
+        <div className="flex max-w-lg flex-col self-center">
           <Title />
-          <BlogLinks posts={allPosts.data} />
+          <div className="self-start">
+            <BlogLinks posts={allPosts.data} />
+          </div>
         </div>
       </main>
     </>

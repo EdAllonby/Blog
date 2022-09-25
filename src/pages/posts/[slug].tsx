@@ -11,7 +11,6 @@ import { trpc } from "../../utils/trpc";
 import { getAllSlugs } from "../../server/api/post";
 import { BlogDate } from "@/components/blog-date";
 import dayjs from "dayjs";
-import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote";
 import { Header } from "@/components/header";
 
@@ -32,7 +31,7 @@ export async function getStaticProps(
       trpcState: ssg.dehydrate(),
       slug,
     },
-    revalidate: 1,
+    revalidate: 60,
   };
 }
 
