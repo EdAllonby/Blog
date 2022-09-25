@@ -4,8 +4,10 @@ import Head from "next/head";
 import { trpc } from "../utils/trpc";
 import { appRouter } from "../server/trpc/router";
 import superjson from "superjson";
-import Link from "next/link";
 import { createContext } from "../server/trpc/context";
+import { Title } from "@/components/title";
+import { BlogLink } from "@/components/blog-link";
+import dayjs from "dayjs";
 
 export const getStaticProps: GetStaticProps = async () => {
   const ssg = createProxySSGHelpers({
@@ -36,16 +38,18 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
-        <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
-          Ed Allonby
-        </h1>
-        <div>
+        <Title />
+        <ul className="flex flex-col gap-4">
           {allPosts.data?.map((blogPost) => (
-            <Link key={blogPost.slug} href={`posts/${blogPost.slug}`}>
-              <a className="hover:underline">{blogPost.title}</a>
-            </Link>
+            <li key={blogPost.slug}>
+              <BlogLink
+                slug={blogPost.slug}
+                title={blogPost.title}
+                publishDate={dayjs(blogPost.date)}
+              />
+            </li>
           ))}
-        </div>
+        </ul>
       </main>
     </>
   );

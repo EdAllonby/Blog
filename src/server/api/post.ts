@@ -9,7 +9,7 @@ import {
 export async function getAllPostsForHome() {
   const query = gql`
     query GetPosts {
-      posts {
+      posts(orderBy: date_DESC) {
         slug
         title
         date
