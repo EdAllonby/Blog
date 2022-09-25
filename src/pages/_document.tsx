@@ -11,6 +11,8 @@ export default function Document() {
           type="font/ttf"
           crossOrigin="anonymous"
         />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content="Ed's Blogs" />
       </Head>
       <body className="bg-light-yellow font-ebgaramond">
         <Main />

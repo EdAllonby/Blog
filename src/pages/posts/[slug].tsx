@@ -4,10 +4,14 @@ import {
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from "next";
+import Head from "next/head";
 import { appRouter } from "../../server/trpc/router";
 import superjson from "superjson";
 import { trpc } from "../../utils/trpc";
 import { getAllSlugs } from "../../server/api/post";
+import { BlogDate } from "@/components/blog-date";
+import dayjs from "dayjs";
+import Link from "next/link";
 
 export async function getStaticProps(
   context: GetStaticPropsContext<{ slug: string }>
@@ -50,11 +54,25 @@ export default function PostViewPage(
 
   const { data } = postQuery;
 
+  const headTitle = `Ed Allonby - ${data?.title}`;
+
   return (
     <>
-      <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
-        {data?.title}
-      </h1>
+      <Head>
+        <title>{headTitle}</title>
+      </Head>
+      <main className="container mx-auto flex flex-col justify-center p-4">
+        <Link href="/">
+          <a className="self-start text-3xl font-extrabold leading-normal text-gray-700 hover:underline md:text-4xl">
+            Ed Allonby
+          </a>
+        </Link>
+        <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
+          {data?.title}
+        </h1>
+        <BlogDate date={dayjs(data?.date)} />
+        <p className="mt-8 text-lg text-gray-700">{data?.content.markdown}</p>
+      </main>
     </>
   );
 }
