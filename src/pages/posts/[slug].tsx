@@ -1,27 +1,25 @@
-import { createSSGHelpers } from "@trpc/react/ssg";
+import { createProxySSGHelpers } from "@trpc/react/ssg";
 import {
   GetStaticPaths,
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from "next";
-import { appRouter } from "../../server/router";
+import { appRouter } from "../../server/trpc/router";
 import superjson from "superjson";
 import { trpc } from "../../utils/trpc";
-import { getAllSlugs } from "../../server/router/post";
+import { getAllSlugs } from "../../server/trpc/router/post";
 
 export async function getStaticProps(
   context: GetStaticPropsContext<{ slug: string }>
 ) {
-  const ssg = createSSGHelpers({
+  const ssg = createProxySSGHelpers({
     router: appRouter,
     ctx: {},
     transformer: superjson,
   });
   const slug = context.params?.slug as string;
 
-  await ssg.fetchQuery("post.bySlug", {
-    slug,
-  });
+  await ssg.post.bySlug.fetch({ slug });
 
   return {
     props: {
@@ -51,7 +49,7 @@ export default function PostViewPage(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   const { slug } = props;
-  const postQuery = trpc.useQuery(["post.bySlug", { slug }]);
+  const postQuery = trpc.post.bySlug.useQuery({ slug });
   if (postQuery.status !== "success") {
     // won't happen since we're using `fallback: "blocking"`
     return <>Loading...</>;

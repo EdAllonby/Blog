@@ -22,9 +22,6 @@ if (_clientEnv.success === false) {
   throw new Error("Invalid environment variables");
 }
 
-/**
- * Validate that client-side environment variables are exposed to the client.
- */
 for (let key of Object.keys(_clientEnv.data)) {
   if (!key.startsWith("NEXT_PUBLIC_")) {
     console.warn(

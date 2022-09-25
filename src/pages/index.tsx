@@ -1,19 +1,20 @@
-import { createSSGHelpers } from "@trpc/react/ssg";
 import { NextPage } from "next";
+import { createProxySSGHelpers } from "@trpc/react/ssg";
 import Head from "next/head";
 import { trpc } from "../utils/trpc";
-import { appRouter } from "../server/router";
+import { appRouter } from "../server/trpc/router";
 import superjson from "superjson";
 import Link from "next/link";
+import { createContext } from "../server/trpc/context";
 
-export async function getStaticProps() {
-  const ssg = createSSGHelpers({
+export const getStaticProps = async () => {
+  const ssg = createProxySSGHelpers({
     router: appRouter,
-    ctx: {},
+    ctx: await createContext(),
     transformer: superjson,
   });
 
-  await ssg.fetchQuery("post.all");
+  await ssg.post.all.fetch();
 
   return {
     props: {
@@ -21,10 +22,13 @@ export async function getStaticProps() {
     },
     revalidate: 1,
   };
-}
+};
 
 const Home: NextPage = () => {
-  const postQuery = trpc.useQuery(["post.all"], { staleTime: 3600 });
+  const allPosts = trpc.post.all.useQuery(undefined, {
+    staleTime: 3000,
+  });
+
   return (
     <>
       <Head>
@@ -38,7 +42,7 @@ const Home: NextPage = () => {
           Ed Allonby
         </h1>
         <div>
-          {postQuery.data?.map((blogPost) => (
+          {allPosts.data?.map((blogPost) => (
             <Link key={blogPost.slug} href={`posts/${blogPost.slug}`}>
               <a className="hover:underline">{blogPost.title}</a>
             </Link>

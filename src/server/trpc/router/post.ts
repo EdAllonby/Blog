@@ -1,27 +1,27 @@
-import { createRouter } from "./context";
 import { gql, GraphQLClient } from "graphql-request";
-import { env } from "../../env/server.mjs";
+import { env } from "../../../env/server.mjs";
 import { z } from "zod";
 import {
   GetPostBySlugQuery,
   GetPostSlugsQuery,
   GetPostsQuery,
-} from "../../../generated/graphql";
+} from "../../../../generated/graphql";
+import { t } from "../trpc";
 
-export const postRouter = createRouter()
-  .query("all", {
-    async resolve() {
-      return await getAllPostsForHome();
-    },
-  })
-  .query("bySlug", {
-    input: z.object({
-      slug: z.string(),
-    }),
-    async resolve({ input }) {
+export const postRouter = t.router({
+  all: t.procedure.query(async () => {
+    return await getAllPostsForHome();
+  }),
+  bySlug: t.procedure
+    .input(
+      z.object({
+        slug: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
       return await getPostBySlug(input.slug);
-    },
-  });
+    }),
+});
 
 async function getAllPostsForHome() {
   const query = gql`
