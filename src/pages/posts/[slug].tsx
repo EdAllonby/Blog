@@ -13,6 +13,7 @@ import { BlogDate } from "@/components/blog-date";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote";
+import { Header } from "@/components/header";
 
 export async function getStaticProps(
   context: GetStaticPropsContext<{ slug: string }>
@@ -51,27 +52,20 @@ export default function PostViewPage(
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) {
   const { slug } = props;
-  const postQuery = trpc.post.bySlug.useQuery({ slug });
-
-  const { data } = postQuery;
+  const { data } = trpc.post.bySlug.useQuery({ slug });
 
   if (!data) {
     return null;
   }
 
   const headTitle = `Ed Allonby - ${data.title}`;
-  console.log(data.mdxSource);
   return (
     <>
       <Head>
         <title>{headTitle}</title>
       </Head>
       <main className="container mx-auto flex flex-col justify-center p-4">
-        <Link href="/">
-          <a className="self-start text-3xl font-extrabold leading-normal text-gray-700 hover:underline md:text-4xl">
-            Ed Allonby
-          </a>
-        </Link>
+        <Header />
         <div className="mx-auto">
           <h1 className="text-center text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
             {data.title}

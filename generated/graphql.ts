@@ -5817,6 +5817,18 @@ export enum _SystemDateTimeFieldVariation {
   Localization = "localization",
 }
 
+export type GetAboutPageQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAboutPageQuery = {
+  __typename?: "Query";
+  page?: {
+    __typename?: "Page";
+    title: string;
+    slug: string;
+    content: { __typename?: "RichText"; markdown: string };
+  } | null;
+};
+
 export type GetPostsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetPostsQuery = {
