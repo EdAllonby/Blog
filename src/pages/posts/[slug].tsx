@@ -11,8 +11,8 @@ import { trpc } from "../../utils/trpc";
 import { getAllSlugs } from "../../server/api/post";
 import { BlogDate } from "@/components/blog-date";
 import dayjs from "dayjs";
-import { MDXRemote } from "next-mdx-remote";
 import { Header } from "@/components/header";
+import { Article } from "@/components/article";
 
 export async function getStaticProps(
   context: GetStaticPropsContext<{ slug: string }>
@@ -72,9 +72,7 @@ export default function PostViewPage(
           <div className="flex justify-center">
             <BlogDate date={dayjs(data.date)} />
           </div>
-          <article className="prose mx-auto mt-8 text-gray-700 prose-headings:text-gray-700 lg:prose-xl">
-            <MDXRemote {...data.mdxSource} />
-          </article>
+          <Article source={data.mdxSource} />
         </div>
       </main>
     </>
