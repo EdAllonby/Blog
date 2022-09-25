@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { getAllPostsForHome, getPostBySlug } from "../../api/post";
 import { t } from "../trpc";
+import { serialize } from "next-mdx-remote/serialize";
 
 export const postRouter = t.router({
   all: t.procedure.query(async () => {
@@ -13,6 +14,12 @@ export const postRouter = t.router({
       })
     )
     .query(async ({ input }) => {
-      return await getPostBySlug(input.slug);
+      const data = await getPostBySlug(input.slug);
+      if (!data) {
+        return null;
+      }
+
+      const mdxSource = await serialize(data?.content.markdown);
+      return { ...data, mdxSource };
     }),
 });

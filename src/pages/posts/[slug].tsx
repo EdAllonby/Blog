@@ -12,6 +12,7 @@ import { getAllSlugs } from "../../server/api/post";
 import { BlogDate } from "@/components/blog-date";
 import dayjs from "dayjs";
 import Link from "next/link";
+import { MDXRemote } from "next-mdx-remote";
 
 export async function getStaticProps(
   context: GetStaticPropsContext<{ slug: string }>
@@ -54,8 +55,12 @@ export default function PostViewPage(
 
   const { data } = postQuery;
 
-  const headTitle = `Ed Allonby - ${data?.title}`;
+  if (!data) {
+    return null;
+  }
 
+  const headTitle = `Ed Allonby - ${data.title}`;
+  console.log(data.mdxSource);
   return (
     <>
       <Head>
@@ -67,11 +72,17 @@ export default function PostViewPage(
             Ed Allonby
           </a>
         </Link>
-        <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
-          {data?.title}
-        </h1>
-        <BlogDate date={dayjs(data?.date)} />
-        <p className="mt-8 text-lg text-gray-700">{data?.content.markdown}</p>
+        <div className="mx-auto">
+          <h1 className="text-center text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
+            {data.title}
+          </h1>
+          <div className="flex justify-center">
+            <BlogDate date={dayjs(data.date)} />
+          </div>
+          <article className="prose mx-auto mt-8 text-gray-700 prose-headings:text-gray-700 lg:prose-xl">
+            <MDXRemote {...data.mdxSource} />
+          </article>
+        </div>
       </main>
     </>
   );

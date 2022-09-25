@@ -11,6 +11,7 @@
     "codegen": "cross-env DOTENV_CONFIG_PATH=.env.local graphql-codegen --config codegen.yml -r dotenv/config"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.7",
     "@trpc/client": "^10.0.0-proxy-beta.7",
     "@trpc/next": "^10.0.0-proxy-beta.7",
     "@trpc/react": "^10.0.0-proxy-beta.7",
@@ -19,6 +20,7 @@
     "graphql": "^16.6.0",
     "graphql-request": "^5.0.0",
     "next": "12.3.1",
+    "next-mdx-remote": "^4.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-query": "^3.39.2",
