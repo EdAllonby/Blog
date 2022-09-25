@@ -7,7 +7,7 @@ import {
 import { appRouter } from "../../server/trpc/router";
 import superjson from "superjson";
 import { trpc } from "../../utils/trpc";
-import { getAllSlugs } from "../../server/trpc/router/post";
+import { getAllSlugs } from "../../server/api/post";
 
 export async function getStaticProps(
   context: GetStaticPropsContext<{ slug: string }>
