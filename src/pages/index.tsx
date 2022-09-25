@@ -20,14 +20,11 @@ export const getStaticProps = async () => {
     props: {
       trpcState: ssg.dehydrate(),
     },
-    revalidate: 1,
   };
 };
 
 const Home: NextPage = () => {
-  const allPosts = trpc.post.all.useQuery(undefined, {
-    staleTime: 3000,
-  });
+  const allPosts = trpc.post.all.useQuery();
 
   return (
     <>

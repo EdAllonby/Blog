@@ -50,10 +50,6 @@ export default function PostViewPage(
 ) {
   const { slug } = props;
   const postQuery = trpc.post.bySlug.useQuery({ slug });
-  if (postQuery.status !== "success") {
-    // won't happen since we're using `fallback: "blocking"`
-    return <>Loading...</>;
-  }
 
   const { data } = postQuery;
 
