@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import { createProxySSGHelpers } from "@trpc/react/ssg";
 import Head from "next/head";
 import { trpc } from "../utils/trpc";
@@ -7,7 +7,7 @@ import superjson from "superjson";
 import Link from "next/link";
 import { createContext } from "../server/trpc/context";
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const ssg = createProxySSGHelpers({
     router: appRouter,
     ctx: await createContext(),
@@ -20,6 +20,7 @@ export const getStaticProps = async () => {
     props: {
       trpcState: ssg.dehydrate(),
     },
+    revalidate: 60,
   };
 };
 
