@@ -5,6 +5,7 @@ import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { createContext } from "src/server/trpc/context";
 import { appRouter } from "src/server/trpc/router";
+import { constants } from "src/utils/constants";
 import { trpc } from "src/utils/trpc";
 import superjson from "superjson";
 
@@ -32,10 +33,12 @@ const About: NextPage = () => {
     return null;
   }
 
+  const headTitle = `${constants.websiteName} - About`;
+
   return (
     <>
       <Head>
-        <title>Ed Allonby - About</title>
+        <title>{headTitle}</title>
       </Head>
       <main className="container mx-auto flex flex-col p-4">
         <Header />

@@ -13,6 +13,7 @@ import { BlogDate } from "@/components/blog-date";
 import dayjs from "dayjs";
 import { Header } from "@/components/header";
 import { Article } from "@/components/article";
+import { constants } from "src/utils/constants";
 
 export async function getStaticProps(
   context: GetStaticPropsContext<{ slug: string }>
@@ -57,7 +58,7 @@ export default function PostViewPage(
     return null;
   }
 
-  const headTitle = `Ed Allonby - ${data.title}`;
+  const headTitle = `${constants.websiteName} - ${data.title}`;
   return (
     <>
       <Head>

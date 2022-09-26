@@ -8,6 +8,7 @@ import superjson from "superjson";
 import { createContext } from "../server/trpc/context";
 import { Title } from "@/components/title";
 import { AboutLink } from "@/components/about-link";
+import { constants } from "src/utils/constants";
 
 export const getStaticProps: GetStaticProps = async () => {
   const ssg = createProxySSGHelpers({
@@ -32,7 +33,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Ed Allonby</title>
+        <title>{constants.websiteName}</title>
       </Head>
       <main className="container mx-auto flex flex-col p-4">
         <div className="self-end">
