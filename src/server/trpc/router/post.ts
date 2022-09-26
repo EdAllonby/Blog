@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { getAllPostsForHome, getPostBySlug } from "../../api/post";
 import { t } from "../trpc";
-import { serialize } from "next-mdx-remote/serialize";
+import { enhanceWithMdx } from "src/utils/mdx";
 
 export const postRouter = t.router({
   all: t.procedure.query(async () => {
@@ -16,10 +16,9 @@ export const postRouter = t.router({
     .query(async ({ input }) => {
       const data = await getPostBySlug(input.slug);
       if (!data) {
-        return null;
+        throw `Blog ${input.slug} not found`;
       }
 
-      const mdxSource = await serialize(data?.content.markdown);
-      return { ...data, mdxSource };
+      return await enhanceWithMdx(data);
     }),
 });
