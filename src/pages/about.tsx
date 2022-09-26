@@ -43,7 +43,7 @@ const About: NextPage = () => {
       <main className="container mx-auto flex flex-col p-4">
         <Header />
         <div className="mx-auto">
-          <h1 className="text-center text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
+          <h1 className="text-center text-5xl font-extrabold leading-normal md:text-[5rem]">
             {data.title}
           </h1>
           <Article source={data.mdxSource} />

@@ -6,7 +6,7 @@ export const Header = () => {
   return (
     <header className="flex justify-between">
       <Link href="/">
-        <a className="self-start text-3xl font-extrabold leading-normal text-gray-700 hover:underline md:text-4xl">
+        <a className="self-start text-3xl font-extrabold leading-normal hover:underline md:text-4xl">
           {constants.websiteName}
         </a>
       </Link>

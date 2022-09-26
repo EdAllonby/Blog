@@ -15,7 +15,7 @@ export const BlogLink = ({
     <>
       <Link href={`posts/${slug}`}>
         <a className="hover:underline">
-          <span className="text-xl text-gray-700">{title}</span>{" "}
+          <span className="text-xl">{title}</span>{" "}
         </a>
       </Link>
       <BlogDate date={publishDate} />

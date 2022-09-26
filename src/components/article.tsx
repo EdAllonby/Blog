@@ -28,7 +28,7 @@ export const Article = ({
   };
 
   return (
-    <article className="prose prose-xl mx-auto mt-8 text-gray-700 prose-headings:text-gray-700 prose-a:text-gray-700">
+    <article className="prose prose-xl mx-auto mt-8 prose-headings:text-gray-700 prose-a:text-gray-700">
       <MDXRemote {...source} components={components} />
     </article>
   );
