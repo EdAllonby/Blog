@@ -7,7 +7,6 @@ import { appRouter } from "../server/trpc/router";
 import superjson from "superjson";
 import { createContext } from "../server/trpc/context";
 import { Title } from "@/components/title";
-import { AboutLink } from "@/components/about-link";
 import { constants } from "src/utils/constants";
 import { HeaderCorner } from "@/components/header-corner";
 
