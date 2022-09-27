@@ -33,7 +33,7 @@ const About: NextPage = () => {
     return null;
   }
 
-  const headTitle = `${constants.websiteName} - About`;
+  const headTitle = `${constants.websiteName} - ${data.title}`;
 
   return (
     <>
