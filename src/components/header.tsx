@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { constants } from "src/utils/constants";
-import { AboutLink } from "./about-link";
+import { HeaderCorner } from "./header-corner";
 
 export const Header = () => {
   return (
@@ -10,7 +10,7 @@ export const Header = () => {
           {constants.websiteName}
         </a>
       </Link>
-      <AboutLink />
+      <HeaderCorner />
     </header>
   );
 };

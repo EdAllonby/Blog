@@ -9,6 +9,7 @@ import { createContext } from "../server/trpc/context";
 import { Title } from "@/components/title";
 import { AboutLink } from "@/components/about-link";
 import { constants } from "src/utils/constants";
+import { HeaderCorner } from "@/components/header-corner";
 
 export const getStaticProps: GetStaticProps = async () => {
   const ssg = createProxySSGHelpers({
@@ -37,7 +38,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="container mx-auto flex flex-col p-4">
         <div className="self-end">
-          <AboutLink />
+          <HeaderCorner />
         </div>
         <div className="flex max-w-lg flex-col self-center">
           <Title />

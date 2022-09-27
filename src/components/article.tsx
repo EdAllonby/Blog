@@ -1,20 +1,6 @@
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { ReactNode } from "react";
 
-const HrefBlankTarget = ({
-  children,
-  href,
-}: {
-  children?: ReactNode;
-  href?: string;
-}) => {
-  return (
-    <a href={href} title={href} target="_blank" rel="noreferrer">
-      {children}
-    </a>
-  );
-};
-
 export const Article = ({
   source,
 }: {
@@ -24,11 +10,26 @@ export const Article = ({
   >;
 }) => {
   const components = {
-    a: HrefBlankTarget,
+    a: ({ children, href }: { children?: ReactNode; href?: string }) => {
+      return (
+        <a
+          href={href}
+          title={href}
+          target="_blank"
+          rel="noreferrer"
+          className="text-gray-700 dark:text-gray-200"
+        >
+          {children}
+        </a>
+      );
+    },
+    h1: ({ children }: { children?: ReactNode }) => (
+      <h1 className="text-gray-700 dark:text-gray-200">{children}</h1>
+    ),
   };
 
   return (
-    <article className="prose prose-xl mx-auto mt-8 prose-headings:text-gray-700 prose-a:text-gray-700">
+    <article className="prose prose-xl prose-stone mx-auto mt-8 dark:prose-invert">
       <MDXRemote {...source} components={components} />
     </article>
   );

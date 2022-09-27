@@ -14,7 +14,7 @@ export default function Document() {
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="Ed's Blogs" />
       </Head>
-      <body className="bg-light-yellow font-ebgaramond text-gray-700">
+      <body className="bg-light-yellow font-ebgaramond text-gray-700 dark:bg-dark-gray dark:text-gray-200">
         <Main />
         <NextScript />
       </body>
