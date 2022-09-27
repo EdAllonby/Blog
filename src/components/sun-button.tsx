@@ -1,6 +1,6 @@
 export const SunButton = ({ onClick }: { onClick?: () => void }) => {
   return (
-    <button onClick={onClick}>
+    <button onClick={onClick} aria-label="Light Mode">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

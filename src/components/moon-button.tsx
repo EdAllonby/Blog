@@ -1,6 +1,6 @@
 export const MoonButton = ({ onClick }: { onClick: () => void }) => {
   return (
-    <button onClick={onClick}>
+    <button onClick={onClick} aria-label="Dark Mode">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
