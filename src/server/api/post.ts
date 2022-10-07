@@ -1,10 +1,10 @@
-import { gql, GraphQLClient } from "graphql-request";
-import { env } from "../../env/server.mjs";
+import { gql } from "graphql-request";
 import {
   GetPostBySlugQuery,
   GetPostSlugsQuery,
   GetPostsQuery,
 } from "../../../generated/graphql";
+import { request } from "./client";
 
 export async function getAllPostsForHome() {
   const query = gql`
@@ -17,8 +17,7 @@ export async function getAllPostsForHome() {
     }
   `;
 
-  const client = new GraphQLClient(env.CMS_SCHEMA_URL);
-  return (await client.request<GetPostsQuery>(query)).posts;
+  return (await request<GetPostsQuery>(query)).posts;
 }
 
 export async function getPostBySlug(slug: string) {
@@ -36,8 +35,7 @@ export async function getPostBySlug(slug: string) {
     }
   `;
 
-  const client = new GraphQLClient(env.CMS_SCHEMA_URL);
-  return (await client.request<GetPostBySlugQuery>(query, { slug })).post;
+  return (await request<GetPostBySlugQuery>(query, { slug })).post;
 }
 
 export async function getAllSlugs() {
@@ -49,6 +47,5 @@ export async function getAllSlugs() {
     }
   `;
 
-  const client = new GraphQLClient(env.CMS_SCHEMA_URL);
-  return (await client.request<GetPostSlugsQuery>(query)).posts;
+  return (await request<GetPostSlugsQuery>(query)).posts;
 }

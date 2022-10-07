@@ -1,6 +1,6 @@
-import { gql, GraphQLClient } from "graphql-request";
-import { env } from "../../env/server.mjs";
+import { gql } from "graphql-request";
 import { GetAboutPageQuery } from "../../../generated/graphql";
+import { request } from "./client";
 
 export async function getAboutPage() {
   const query = gql`
@@ -15,6 +15,5 @@ export async function getAboutPage() {
     }
   `;
 
-  const client = new GraphQLClient(env.CMS_SCHEMA_URL);
-  return (await client.request<GetAboutPageQuery>(query)).page;
+  return (await request<GetAboutPageQuery>(query)).page;
 }
