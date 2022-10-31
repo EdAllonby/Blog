@@ -13,7 +13,7 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.7",
     "@trpc/client": "^10.0.0-proxy-beta.13",
-    "@trpc/next": "^10.0.0-proxy-beta.13",
+    "@trpc/next": "^10.0.0-rc.2",
     "@trpc/react": "^10.0.0-proxy-beta.13",
     "@trpc/server": "^10.0.0-proxy-beta.13",
     "dayjs": "^1.11.5",
