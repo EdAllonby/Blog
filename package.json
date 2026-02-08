@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "check": "npm run lint && npm run type-check && npm run format",
     "prepare": "husky install",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
     "codegen": "cross-env DOTENV_CONFIG_PATH=.env.local graphql-codegen --config codegen.yml -r dotenv/config"
   },
   "dependencies": {
