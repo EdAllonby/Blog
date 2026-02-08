@@ -1,19 +1,25 @@
 import { gql } from "graphql-request";
-import { GetAboutPageQuery } from "../../../generated/graphql";
+import { cacheLife } from "next/cache";
+
+import type { GetAboutPageQuery } from "generated/graphql";
+
 import { request } from "./client";
 
-export async function getAboutPage() {
-  const query = gql`
-    query GetAboutPage {
-      page(where: { slug: "about" }) {
-        title
-        slug
-        content {
-          markdown
-        }
+const getAboutPageQuery = gql`
+  query GetAboutPage {
+    page(where: { slug: "about" }) {
+      title
+      slug
+      content {
+        markdown
       }
     }
-  `;
+  }
+`;
 
-  return (await request<GetAboutPageQuery>(query)).page;
+export async function getAboutPage() {
+  "use cache";
+  cacheLife("hours");
+
+  return (await request<GetAboutPageQuery>(getAboutPageQuery)).page;
 }

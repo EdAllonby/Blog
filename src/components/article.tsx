@@ -1,36 +1,47 @@
-import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
-import { ReactNode } from "react";
+import Link from "next/link";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { type ComponentPropsWithoutRef } from "react";
 
-export const Article = ({
-  source,
-}: {
-  source: MDXRemoteSerializeResult<
-    Record<string, unknown>,
-    Record<string, string>
-  >;
-}) => {
-  const components = {
-    a: ({ children, href }: { children?: ReactNode; href?: string }) => {
+const articleComponents = {
+  a: ({ href, children, ...props }: ComponentPropsWithoutRef<"a">) => {
+    if (!href) {
+      return (
+        <a {...props} className="text-gray-700 underline dark:text-gray-200">
+          {children}
+        </a>
+      );
+    }
+
+    const isExternal =
+      href.startsWith("http://") || href.startsWith("https://");
+
+    if (isExternal) {
       return (
         <a
+          className="text-gray-700 underline dark:text-gray-200"
           href={href}
-          title={href}
-          target="_blank"
           rel="noreferrer"
-          className="text-gray-700 dark:text-gray-200"
+          target="_blank"
+          title={href}
+          {...props}
         >
           {children}
         </a>
       );
-    },
-    h1: ({ children }: { children?: ReactNode }) => (
-      <h1 className="text-gray-700 dark:text-gray-200">{children}</h1>
-    ),
-  };
+    }
 
+    return (
+      <Link className="text-gray-700 underline dark:text-gray-200" href={href}>
+        {children}
+      </Link>
+    );
+  },
+};
+
+export function Article({ source }: { source: string }) {
   return (
     <article className="prose prose-xl prose-stone mx-auto mt-8 dark:prose-invert">
-      <MDXRemote {...source} components={components} />
+      <MDXRemote components={articleComponents} source={source} />
     </article>
   );
-};
+}

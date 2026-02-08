@@ -2,11 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "EB Garamond Variable";
-  font-style: normal;
-  font-weight: 200 700;
-  src: local("EB Garamond"),
-    url(/fonts/EBGaramond-VariableFont_wght.ttf) format("truetype");
-  font-display: swap;
+@layer base {
+  :root {
+    --background: 50 36% 96%;
+    --foreground: 226 20% 28%;
+    --card: 50 36% 96%;
+    --card-foreground: 226 20% 28%;
+    --popover: 50 36% 96%;
+    --popover-foreground: 226 20% 28%;
+    --primary: 226 20% 28%;
+    --primary-foreground: 50 36% 96%;
+    --secondary: 214 22% 90%;
+    --secondary-foreground: 226 20% 28%;
+    --muted: 214 22% 92%;
+    --muted-foreground: 217 12% 45%;
+    --accent: 214 22% 90%;
+    --accent-foreground: 226 20% 28%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 16% 82%;
+    --input: 214 16% 82%;
+    --ring: 226 20% 28%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 210 5% 23%;
+    --foreground: 220 14% 89%;
+    --card: 210 5% 23%;
+    --card-foreground: 220 14% 89%;
+    --popover: 210 5% 23%;
+    --popover-foreground: 220 14% 89%;
+    --primary: 220 14% 89%;
+    --primary-foreground: 210 5% 23%;
+    --secondary: 210 4% 31%;
+    --secondary-foreground: 220 14% 89%;
+    --muted: 210 4% 29%;
+    --muted-foreground: 220 10% 66%;
+    --accent: 210 4% 31%;
+    --accent-foreground: 220 14% 89%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 210 4% 38%;
+    --input: 210 4% 38%;
+    --ring: 220 14% 89%;
+  }
+
+  * {
+    @apply border-border;
+  }
 }

@@ -1,9 +1,11 @@
 import Link from "next/link";
 
-export const AboutLink = () => {
+import { Button } from "@/components/ui/button";
+
+export function AboutLink() {
   return (
-    <Link href="/about">
-      <a className="hover:underline">About</a>
-    </Link>
+    <Button asChild className="text-base font-normal" variant="link">
+      <Link href="/about">About</Link>
+    </Button>
   );
-};
+}

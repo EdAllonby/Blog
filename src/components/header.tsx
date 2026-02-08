@@ -1,16 +1,20 @@
 import Link from "next/link";
-import { constants } from "src/utils/constants";
+
+import { Button } from "@/components/ui/button";
+import { constants } from "@/utils/constants";
 import { HeaderCorner } from "./header-corner";
 
-export const Header = () => {
+export function Header() {
   return (
     <header className="flex justify-between">
-      <Link href="/">
-        <a className="self-start text-3xl font-extrabold leading-normal hover:underline md:text-4xl">
-          {constants.websiteName}
-        </a>
-      </Link>
+      <Button
+        asChild
+        className="text-3xl font-extrabold leading-normal md:text-4xl"
+        variant="link"
+      >
+        <Link href="/">{constants.websiteName}</Link>
+      </Button>
       <HeaderCorner />
     </header>
   );
-};
+}

@@ -1,18 +1,13 @@
-import dayjs from "dayjs";
-import { GetPostsQuery } from "generated/graphql";
-import React from "react";
-import { BlogLink } from "./blog-link";
+import type { GetPostsQuery } from "generated/graphql";
 
-export function BlogLinks({ posts }: { posts?: GetPostsQuery["posts"] }) {
+import { BlogLink } from "@/components/blog-link";
+
+export function BlogLinks({ posts }: { posts: GetPostsQuery["posts"] }) {
   return (
-    <ul className="flex flex-col gap-4">
-      {posts?.map((post) => (
+    <ul className="m-0 flex list-none flex-col gap-4 p-0">
+      {posts.map((post) => (
         <li key={post.slug}>
-          <BlogLink
-            slug={post.slug}
-            title={post.title}
-            publishDate={dayjs(post.date)}
-          />
+          <BlogLink post={post} />
         </li>
       ))}
     </ul>

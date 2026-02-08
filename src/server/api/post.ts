@@ -1,51 +1,67 @@
 import { gql } from "graphql-request";
-import {
+import { cacheLife } from "next/cache";
+
+import type {
   GetPostBySlugQuery,
   GetPostSlugsQuery,
   GetPostsQuery,
-} from "../../../generated/graphql";
+} from "generated/graphql";
+
 import { request } from "./client";
 
-export async function getAllPostsForHome() {
-  const query = gql`
-    query GetPosts {
-      posts(orderBy: date_DESC) {
-        slug
-        title
-        date
-      }
+const getPostsQuery = gql`
+  query GetPosts {
+    posts(orderBy: date_DESC) {
+      slug
+      title
+      date
     }
-  `;
+  }
+`;
 
-  return (await request<GetPostsQuery>(query)).posts;
+const getPostBySlugQuery = gql`
+  query GetPostBySlug($slug: String!) {
+    post(where: { slug: $slug }) {
+      slug
+      title
+      date
+      content {
+        markdown
+      }
+      tags
+    }
+  }
+`;
+
+const getPostSlugsQuery = gql`
+  query GetPostSlugs {
+    posts {
+      slug
+    }
+  }
+`;
+
+export async function getAllPostsForHome() {
+  "use cache";
+  cacheLife("hours");
+
+  return (await request<GetPostsQuery>(getPostsQuery)).posts;
 }
 
 export async function getPostBySlug(slug: string) {
-  const query = gql`
-    query GetPostBySlug($slug: String!) {
-      post(where: { slug: $slug }) {
-        slug
-        title
-        date
-        content {
-          markdown
-        }
-        tags
-      }
-    }
-  `;
+  "use cache";
+  cacheLife("hours");
 
-  return (await request<GetPostBySlugQuery>(query, { slug })).post;
+  return (
+    await request<GetPostBySlugQuery, { slug: string }>(getPostBySlugQuery, {
+      slug,
+    })
+  ).post;
 }
 
 export async function getAllSlugs() {
-  const query = gql`
-    query GetPostSlugs {
-      posts {
-        slug
-      }
-    }
-  `;
+  "use cache";
+  cacheLife("hours");
 
-  return (await request<GetPostSlugsQuery>(query)).posts;
+  return (await request<GetPostSlugsQuery>(getPostSlugsQuery)).posts;
 }

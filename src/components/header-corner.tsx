@@ -1,11 +1,11 @@
-import { AboutLink } from "./about-link";
-import { ThemeToggle } from "./theme-toggle";
+import { AboutLink } from "@/components/about-link";
+import { ThemeToggle } from "@/components/theme-toggle";
 
-export const HeaderCorner = () => {
+export function HeaderCorner() {
   return (
-    <span className="flex h-fit items-center gap-4">
+    <div className="flex h-fit items-center gap-4">
       <AboutLink />
       <ThemeToggle />
-    </span>
+    </div>
   );
-};
+}

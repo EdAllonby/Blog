@@ -1,16 +1,32 @@
-import { GraphQLClient } from "graphql-request";
-import { env } from "../../env/server.mjs";
+import "server-only";
 
-export const request = async <TQuery>(
+import { GraphQLClient, type Variables } from "graphql-request";
+
+import { env } from "@/env";
+
+const client = new GraphQLClient(env.CMS_SCHEMA_URL, {
+  headers: env.CMS_TOKEN
+    ? { Authorization: `Bearer ${env.CMS_TOKEN}` }
+    : undefined,
+});
+
+export function request<TQuery>(query: string): Promise<TQuery>;
+export function request<TQuery, TVariables extends Variables>(
   query: string,
-  variables?: Record<string, string>
-) => {
-  const headers = {
-    Authorization: env.CMS_TOKEN ? `Bearer ${env.CMS_TOKEN}` : "",
-  };
+  variables: TVariables,
+): Promise<TQuery>;
+export async function request<TQuery, TVariables extends Variables>(
+  query: string,
+  variables?: TVariables,
+) {
+  if (!variables) {
+    const response = await client.rawRequest<TQuery>(query);
+    return response.data;
+  }
 
-  const client = new GraphQLClient(env.CMS_SCHEMA_URL, {
-    headers: headers,
-  });
-  return await client.request<TQuery>(query, variables);
-};
+  const response = await client.rawRequest<TQuery, TVariables>(
+    query,
+    variables,
+  );
+  return response.data;
+}
