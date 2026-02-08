@@ -1,7 +1,7 @@
 import { BlogLinks } from "@/components/blog-links";
 import { HeaderCorner } from "@/components/header-corner";
 import { Title } from "@/components/title";
-import { getAllPostsForHome } from "@/server/api/post";
+import { getAllPostsForHome } from "@/lib/content";
 
 export default async function HomePage() {
   const posts = await getAllPostsForHome();

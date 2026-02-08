@@ -9,7 +9,7 @@ export function Header() {
     <header className="flex justify-between">
       <Button
         asChild
-        className="text-3xl font-extrabold leading-normal md:text-4xl"
+        className="text-3xl leading-normal font-extrabold md:text-4xl"
         variant="link"
       >
         <Link href="/">{constants.websiteName}</Link>

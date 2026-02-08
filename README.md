@@ -1,14 +1,29 @@
 # Ed Blog
 
-A statically generated Next.js blog powered by Hygraph content.
+A statically generated Next.js blog powered by local MDX content files.
 
 ## Stack
 
 - Next.js 16 (App Router)
 - React 19 + React Compiler
 - Cache Components (`"use cache"` + `cacheLife`)
+- MDX with `@next/mdx`
 - Tailwind CSS + shadcn/ui primitives
 - TypeScript + ESLint 9
+
+## Content
+
+- About page: `docs/about.mdx`
+- Blog posts: `docs/posts/*.mdx`
+
+Each post file exports metadata:
+
+```mdx
+export const metadata = {
+  title: "Post title",
+  date: "YYYY-MM-DD",
+};
+```
 
 ## Prerequisites
 
@@ -17,28 +32,17 @@ A statically generated Next.js blog powered by Hygraph content.
 
 ## Setup
 
-1. Copy environment values:
-
-```bash
-cp .env-example .env
-```
-
-2. Install dependencies:
+1. Install dependencies:
 
 ```bash
 pnpm install
 ```
 
-3. Start development server:
+2. Start development server:
 
 ```bash
 pnpm dev
 ```
-
-## Environment Variables
-
-- `CMS_SCHEMA_URL` (required): Hygraph API endpoint
-- `CMS_TOKEN` (optional): bearer token for protected content
 
 ## Scripts
 
@@ -47,7 +51,6 @@ pnpm dev
 - `pnpm start`: run production server
 - `pnpm run check`: lint + type-check + prettier check
 - `pnpm run format`: auto-format files
-- `pnpm run codegen`: regenerate GraphQL types
 
 ## Validation
 

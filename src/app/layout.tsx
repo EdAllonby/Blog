@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         className={cn(
           ebGaramond.className,
           ebGaramond.variable,
-          "bg-light-yellow text-gray-700 dark:bg-dark-gray dark:text-gray-200",
+          "bg-light-yellow dark:bg-dark-gray text-gray-700 dark:text-gray-200",
         )}
       >
         <ThemeProvider

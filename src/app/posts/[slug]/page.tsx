@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { Article } from "@/components/article";
 import { BlogDate } from "@/components/blog-date";
 import { Header } from "@/components/header";
-import { getAllSlugs, getPostBySlug } from "@/server/api/post";
+import { getAllSlugs, getPostBySlug } from "@/lib/content";
 import { constants } from "@/utils/constants";
 
 type PostPageProps = {
@@ -42,18 +42,21 @@ export default async function PostPage({ params }: PostPageProps) {
   if (!post) {
     notFound();
   }
+  const Content = post.Content;
 
   return (
     <main className="container mx-auto flex flex-col justify-center p-4">
       <Header />
       <div className="mx-auto">
-        <h1 className="text-center text-5xl font-extrabold leading-normal md:text-[5rem]">
+        <h1 className="text-center text-5xl leading-normal font-extrabold md:text-[5rem]">
           {post.title}
         </h1>
         <div className="flex items-center justify-center">
           <BlogDate date={dayjs(post.date)} />
         </div>
-        <Article source={post.content.markdown} />
+        <Article>
+          <Content />
+        </Article>
       </div>
     </main>
   );

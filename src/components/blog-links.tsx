@@ -1,8 +1,8 @@
-import type { GetPostsQuery } from "generated/graphql";
+import type { PostSummary } from "@/lib/content";
 
 import { BlogLink } from "@/components/blog-link";
 
-export function BlogLinks({ posts }: { posts: GetPostsQuery["posts"] }) {
+export function BlogLinks({ posts }: { posts: PostSummary[] }) {
   return (
     <ul className="m-0 flex list-none flex-col gap-4 p-0">
       {posts.map((post) => (

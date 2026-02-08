@@ -1,15 +1,13 @@
-import type { GetPostsQuery } from "generated/graphql";
 import Link from "next/link";
 
 import { BlogDate } from "@/components/blog-date";
+import type { PostSummary } from "@/lib/content";
 
-type PostLink = GetPostsQuery["posts"][number];
-
-export function BlogLink({ post }: { post: PostLink }) {
+export function BlogLink({ post }: { post: PostSummary }) {
   return (
     <div>
       <Link
-        className="text-xl font-normal text-foreground underline-offset-4 hover:underline"
+        className="text-foreground text-xl font-normal underline-offset-4 hover:underline"
         href={`/posts/${post.slug}`}
       >
         {post.title}

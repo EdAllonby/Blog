@@ -1,47 +1,9 @@
-import Link from "next/link";
-import { MDXRemote } from "next-mdx-remote/rsc";
-import { type ComponentPropsWithoutRef } from "react";
+import type { ReactNode } from "react";
 
-const articleComponents = {
-  a: ({ href, children, ...props }: ComponentPropsWithoutRef<"a">) => {
-    if (!href) {
-      return (
-        <a {...props} className="text-gray-700 underline dark:text-gray-200">
-          {children}
-        </a>
-      );
-    }
-
-    const isExternal =
-      href.startsWith("http://") || href.startsWith("https://");
-
-    if (isExternal) {
-      return (
-        <a
-          className="text-gray-700 underline dark:text-gray-200"
-          href={href}
-          rel="noreferrer"
-          target="_blank"
-          title={href}
-          {...props}
-        >
-          {children}
-        </a>
-      );
-    }
-
-    return (
-      <Link className="text-gray-700 underline dark:text-gray-200" href={href}>
-        {children}
-      </Link>
-    );
-  },
-};
-
-export function Article({ source }: { source: string }) {
+export function Article({ children }: { children: ReactNode }) {
   return (
-    <article className="prose prose-xl prose-stone prose-headings:text-gray-700 prose-p:text-gray-700 mx-auto mt-8 dark:prose-headings:text-gray-200 dark:prose-invert dark:prose-p:text-gray-200">
-      <MDXRemote components={articleComponents} source={source} />
+    <article className="mx-auto mt-8 text-[1.25rem] leading-[1.8] text-gray-700 dark:text-gray-200 [&_a]:text-gray-700 [&_a]:underline dark:[&_a]:text-gray-200 [&_h1]:my-8 [&_h1]:text-5xl [&_h1]:leading-normal [&_h1]:font-extrabold [&_h1]:text-gray-700 dark:[&_h1]:text-gray-200 [&_h2]:my-8 [&_h2]:text-5xl [&_h2]:leading-normal [&_h2]:font-extrabold [&_h2]:text-gray-700 dark:[&_h2]:text-gray-200 [&_h3]:my-6 [&_h3]:text-4xl [&_h3]:leading-normal [&_h3]:font-extrabold [&_ol]:my-8 [&_ol]:list-decimal [&_ol]:pl-8 [&_p]:my-8 [&_ul]:my-8 [&_ul]:list-disc [&_ul]:pl-8">
+      {children}
     </article>
   );
 }
