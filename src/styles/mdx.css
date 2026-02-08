@@ -1,0 +1,181 @@
+@reference "./globals.css";
+
+@layer components {
+  .mdx-article {
+    --mdx-code-font:
+      var(--font-geist-pixel-square), "SF Mono", "SFMono-Regular", ui-monospace,
+      Menlo, Monaco, Consolas, monospace;
+  }
+
+  /* Typography */
+  .mdx-article a {
+    @apply underline;
+    color: inherit;
+  }
+
+  .mdx-article h1,
+  .mdx-article h2 {
+    @apply my-8 text-5xl leading-normal font-extrabold;
+    color: inherit;
+  }
+
+  .mdx-article h3 {
+    @apply my-6 text-4xl leading-normal font-extrabold;
+  }
+
+  .mdx-article p,
+  .mdx-article ol,
+  .mdx-article ul {
+    @apply my-8;
+  }
+
+  .mdx-article ol {
+    @apply list-decimal pl-8;
+  }
+
+  .mdx-article ul {
+    @apply list-disc pl-8;
+  }
+
+  /* Code blocks */
+  .mdx-article [data-rehype-pretty-code-figure] {
+    @apply relative my-10;
+  }
+
+  .mdx-article .mdx-code-copy-button {
+    @apply border-border text-foreground absolute top-2.5 right-3 z-[2] cursor-pointer rounded-[0.45rem] border bg-white/80 px-[0.56rem] py-[0.38rem] text-[0.68rem] leading-none tracking-[0.06em] uppercase transition-colors;
+    font-family: var(--mdx-code-font);
+  }
+
+  .mdx-article .mdx-code-copy-button:hover {
+    @apply bg-secondary/90;
+    border-color: hsl(var(--ring) / 0.5);
+  }
+
+  .mdx-article .mdx-code-copy-button:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 1px;
+  }
+
+  .mdx-article [data-rehype-pretty-code-title] {
+    @apply border-border bg-secondary/75 text-foreground rounded-t-[0.9rem] border border-b-0 px-[1.1rem] py-[0.55rem] text-[0.8rem] tracking-[0.04em] uppercase;
+    font-family: var(--mdx-code-font);
+  }
+
+  .mdx-article
+    [data-rehype-pretty-code-figure]
+    [data-rehype-pretty-code-title] {
+    @apply pr-[5.2rem];
+  }
+
+  .mdx-article [data-rehype-pretty-code-title] + pre {
+    @apply rounded-t-none;
+  }
+
+  .mdx-article
+    [data-rehype-pretty-code-figure]:not(:has([data-rehype-pretty-code-title]))
+    pre {
+    @apply pt-[2.55rem];
+  }
+
+  .mdx-article pre {
+    @apply border-border m-0 overflow-x-auto rounded-[0.9rem] border py-[0.95rem];
+    background: hsl(50 80% 99%);
+    box-shadow:
+      0 1px 0 hsl(0 0% 100% / 0.7) inset,
+      0 10px 28px hsl(221 20% 24% / 0.08);
+  }
+
+  .mdx-article pre code {
+    @apply grid min-w-full text-[0.9rem] leading-[1.65];
+    font-family: var(--mdx-code-font);
+  }
+
+  .mdx-article [data-rehype-pretty-code-figure] code span {
+    color: var(--shiki-light, currentColor);
+  }
+
+  .mdx-article pre [data-line] {
+    @apply px-[1.2rem];
+  }
+
+  .mdx-article pre [data-highlighted-line] {
+    @apply border-l-ring bg-secondary/55 border-l-[3px];
+    padding-left: calc(1.2rem - 3px);
+  }
+
+  .mdx-article pre [data-highlighted-chars] {
+    @apply rounded-[0.3rem] px-[0.2rem] py-[0.08rem];
+    background: hsl(214 28% 85% / 0.85);
+    box-shadow: 0 0 0 1px hsl(214 22% 75% / 0.7);
+  }
+
+  .mdx-article pre code[data-line-numbers] {
+    counter-reset: line;
+  }
+
+  .mdx-article pre code[data-line-numbers] > [data-line]::before {
+    @apply inline-block min-w-6 text-right;
+    color: hsl(217 12% 45% / 0.85);
+    content: counter(line);
+    counter-increment: line;
+    margin-right: 1rem;
+  }
+
+  .mdx-article :not(pre) > code {
+    @apply border-border bg-secondary/60 rounded-md border px-[0.32rem] py-[0.12rem] text-[0.82em] whitespace-nowrap;
+    font-family: var(--mdx-code-font);
+  }
+
+  .mdx-article pre::-webkit-scrollbar {
+    height: 0.65rem;
+  }
+
+  .mdx-article pre::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+
+  /* Dark theme overrides */
+  .dark .mdx-article [data-rehype-pretty-code-title] {
+    @apply bg-secondary/70 text-foreground;
+  }
+
+  .dark .mdx-article .mdx-code-copy-button {
+    @apply border-border text-foreground;
+    background: hsl(210 4% 25% / 0.82);
+  }
+
+  .dark .mdx-article .mdx-code-copy-button:hover {
+    background: hsl(210 4% 31% / 0.92);
+    border-color: hsl(var(--ring) / 0.6);
+  }
+
+  .dark .mdx-article pre {
+    background: hsl(212 8% 18%);
+    box-shadow:
+      0 1px 0 hsl(0 0% 100% / 0.08) inset,
+      0 12px 30px hsl(0 0% 0% / 0.32);
+  }
+
+  .dark .mdx-article pre [data-highlighted-line] {
+    background: hsl(210 8% 27%);
+    border-left-color: hsl(220 14% 89% / 0.7);
+  }
+
+  .dark .mdx-article pre [data-highlighted-chars] {
+    background: hsl(210 4% 36%);
+    box-shadow: 0 0 0 1px hsl(210 4% 44% / 0.8);
+  }
+
+  .dark .mdx-article [data-rehype-pretty-code-figure] code span {
+    color: var(--shiki-dark, var(--shiki-light, currentColor));
+  }
+
+  .dark .mdx-article pre code[data-line-numbers] > [data-line]::before {
+    color: hsl(220 10% 66% / 0.85);
+  }
+
+  .dark .mdx-article :not(pre) > code {
+    @apply bg-secondary/75;
+  }
+}

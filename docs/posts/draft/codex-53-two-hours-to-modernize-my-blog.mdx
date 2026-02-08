@@ -1,0 +1,142 @@
+export const metadata = {
+  title: "How I used Codex 5.3 to modernize my blog in under two hours",
+  date: "2026-02-08",
+};
+
+I had quietly written this blog off.
+
+It was one of those projects that still "worked," but every part of it felt sticky. The dependencies were old, the architecture reflected a different era of Next.js, and even small edits felt like opening a storage closet you have not touched in years. I kept telling myself I would modernize it one weekend. I did not.
+
+Then I opened the Codex app and decided to see how far I could get in one focused session.
+
+## where I started
+
+The site was from an older setup. It had npm habits baked into scripts, Pages Router structure, and a content flow that depended on a remote CMS path I did not want to maintain for a small personal blog. None of that is inherently wrong, but it no longer matched how I wanted to work.
+
+What I wanted was simple. I wanted to write posts as files in the repo, use App Router patterns everywhere, keep the dependency graph current, and have one command that tells me whether the project is healthy.
+
+That one command ended up being this:
+
+```json title="package.json"
+{
+  "scripts": {
+    "check": "pnpm run lint && pnpm run type-check && pnpm run format:check"
+  }
+}
+```
+
+That line looks boring, and it is. It is also the point. When I run `pnpm run check`, I know exactly what passed and what did not. No ambiguity, no "did I run everything?" moment.
+
+## the first shift: make the repo local-first again
+
+The first big move was emotional as much as technical. I stopped treating blog content as something that lived "somewhere else" and pulled it back into the repo as MDX files under `docs/posts`. Once that happened, the project felt lighter immediately.
+
+Writing became normal again. Open file, write post, commit. No round trip through a content API. No extra mental overhead when I just wanted to fix a sentence.
+
+I ended up with a content loader that feels straightforward in App Router:
+
+```ts title="src/lib/content.ts"
+export async function getAllPostsForHome() {
+  "use cache";
+  cacheLife("hours");
+
+  const slugs = await getPostSlugsFromDirectory();
+  const posts = await Promise.all(
+    slugs.map(async (slug) => {
+      const postModule = await import(`../../docs/posts/${slug}.mdx`);
+      return {
+        slug,
+        date: postModule.metadata?.date ?? "",
+        title: postModule.metadata?.title ?? "Untitled",
+      };
+    }),
+  );
+
+  return posts.sort((a, b) => b.date.localeCompare(a.date));
+}
+```
+
+It is not flashy. It is just understandable. That mattered more than novelty.
+
+## the part I did not expect to enjoy: code snippets
+
+After the migration work, I wanted code blocks to look like they belonged to the site. Not a pasted-in code theme, not a generic block with default monospace, but something that matched the same visual language as everything else.
+
+I used `@next/mdx` with `rehype-pretty-code` and Shiki themes for build-time highlighting, then styled the block surfaces with Geist Pixel so they had character without overpowering the page.
+
+This is the core MDX setup:
+
+```js title="next.config.mjs"
+import createMDX from "@next/mdx";
+
+const withMDX = createMDX({
+  options: {
+    rehypePlugins: [
+      [
+        "rehype-pretty-code",
+        {
+          keepBackground: false,
+          theme: {
+            dark: "github-dark-dimmed",
+            light: "github-light",
+          },
+        },
+      ],
+    ],
+  },
+});
+
+export default withMDX({
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+});
+```
+
+I also wanted copy-to-clipboard, because if I cannot copy code from my own blog in one click, I find that mildly insulting.
+
+The copy button comes from a small `figure` wrapper component that targets code blocks and reads from `pre code` text content. Nothing exotic. Just useful.
+
+One bug took longer than expected. Syntax highlighting "worked" in markup, but the token colors were not visible. The fix was to explicitly map the Shiki CSS variables:
+
+```css title="src/styles/mdx.css"
+.mdx-article [data-rehype-pretty-code-figure] code span {
+  color: var(--shiki-light, currentColor);
+}
+
+.dark .mdx-article [data-rehype-pretty-code-figure] code span {
+  color: var(--shiki-dark, var(--shiki-light, currentColor));
+}
+```
+
+After that, TypeScript and Haskell both rendered exactly how I wanted, with line emphasis, line numbers, and clean contrast in both themes.
+
+## why the Playwright MCP loop changed the quality of this work
+
+The best part of this session was not "AI generated code quickly." I have seen fast code generation before. What felt different was the validation loop.
+
+Instead of guessing whether UI behavior was correct, Codex used the Playwright MCP path to run the site, navigate to the post, click the copy button, confirm the button state changed, and verify clipboard content. It also checked computed token colors in both themes, which caught real styling issues instead of theoretical ones.
+
+That changed how I trusted the output. I was not reading a confident explanation and hoping it was true. I was seeing behavior checks happen in the browser and then iterating on what failed.
+
+For me, this is where MCP stops being abstract architecture talk and becomes practical. The model has tool access, uses it in context, and closes the loop with evidence.
+
+## the quiet lesson: my AGENTS.md got shorter
+
+I used to write long instruction files. I had phases with huge cursor rules, long copilot instructions, and oversized "just in case" guidance. It felt responsible at the time. In practice, it was noisy and brittle.
+
+Over the last couple of days, using Codex directly without hiding behind a full IDE workflow, I learned that terse repo instructions work better. I kept only what the agent truly needs to operate safely in this project: package manager, install/sync behavior, validation commands, and build requirement after framework or routing changes.
+
+That approach was heavily influenced by the AI Hero AGENTS.md guide. The key idea that clicked for me was to keep the root operational contract small and explicit, then add depth only where it is genuinely needed.
+
+I saw the same pattern hold outside this repo too. Different codebase, same result. Smaller guidance, clearer behavior.
+
+## what the two hours actually gave me
+
+By the end of the session, this blog was no longer a stale side project I avoided touching. It was current, readable, and pleasant to work in again.
+
+I had moved to pnpm workflows, App Router, local MDX content, current dependencies, and a snippet system I actually like using. More importantly, I had a tighter loop for future changes: edit, run checks, verify behavior in a real browser, ship.
+
+That is the part I want to keep.
+
+Not the novelty of the tool. The working rhythm.
+
+If you want to dig into the same ideas, the docs that shaped this run were the Next.js MDX guide, the `rehype-pretty-code` docs, Tailwind's `@reference` docs for split stylesheets, the Playwright MCP server docs, and the AGENTS.md guide on AI Hero.

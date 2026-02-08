@@ -2,6 +2,8 @@ import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
 import { type ComponentPropsWithoutRef } from "react";
 
+import { CodeFigure } from "@/components/mdx/code-figure";
+
 const components: MDXComponents = {
   a: ({ href, children, ...props }: ComponentPropsWithoutRef<"a">) => {
     if (!href) {
@@ -39,6 +41,9 @@ const components: MDXComponents = {
         {children}
       </Link>
     );
+  },
+  figure: (props: ComponentPropsWithoutRef<"figure">) => {
+    return <CodeFigure {...props} />;
   },
 };
 

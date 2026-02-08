@@ -47,8 +47,8 @@ export default async function PostPage({ params }: PostPageProps) {
   return (
     <main className="container mx-auto flex flex-col justify-center p-4">
       <Header />
-      <div className="mx-auto">
-        <h1 className="text-center text-5xl leading-normal font-extrabold md:text-[5rem]">
+      <div className="mx-auto w-full max-w-3xl">
+        <h1 className="text-center text-5xl leading-[1.08] font-extrabold text-balance md:text-[5rem] md:leading-[1.02]">
           {post.title}
         </h1>
         <div className="flex items-center justify-center">

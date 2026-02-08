@@ -40,6 +40,7 @@ export type AboutPageData = {
 };
 
 const postsDirectory = join(process.cwd(), "docs", "posts");
+const draftDirectoryPrefix = "draft/";
 
 function hasValidPostMetadata(
   metadata: PostModule["metadata"],
@@ -83,7 +84,9 @@ export async function getAllPostsForHome(): Promise<PostSummary[]> {
     }),
   );
 
-  return posts.sort((a, b) => b.date.localeCompare(a.date));
+  return posts
+    .filter((post) => !post.slug.startsWith(draftDirectoryPrefix))
+    .sort((a, b) => b.date.localeCompare(a.date));
 }
 
 export async function getAllSlugs() {
