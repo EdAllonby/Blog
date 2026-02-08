@@ -40,7 +40,7 @@ const articleComponents = {
 
 export function Article({ source }: { source: string }) {
   return (
-    <article className="prose prose-xl prose-stone mx-auto mt-8 dark:prose-invert">
+    <article className="prose prose-xl prose-stone prose-headings:text-gray-700 prose-p:text-gray-700 mx-auto mt-8 dark:prose-headings:text-gray-200 dark:prose-invert dark:prose-p:text-gray-200">
       <MDXRemote components={articleComponents} source={source} />
     </article>
   );

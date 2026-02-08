@@ -24,8 +24,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
+          ebGaramond.className,
           ebGaramond.variable,
-          "bg-light-yellow font-ebgaramond text-gray-700 dark:bg-dark-gray dark:text-gray-200",
+          "bg-light-yellow text-gray-700 dark:bg-dark-gray dark:text-gray-200",
         )}
       >
         <ThemeProvider
