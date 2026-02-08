@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { EB_Garamond } from "next/font/google";
 import { type ReactNode } from "react";
 
 import { ThemeProvider } from "@/components/providers/theme-provider";
@@ -8,11 +8,10 @@ import { constants } from "@/utils/constants";
 
 import "@/styles/globals.css";
 
-const ebGaramond = localFont({
-  src: "../../public/fonts/EBGaramond-VariableFont_wght.ttf",
+const ebGaramond = EB_Garamond({
   display: "swap",
+  subsets: ["latin"],
   variable: "--font-eb-garamond",
-  weight: "200 700",
 });
 
 export const metadata: Metadata = {
